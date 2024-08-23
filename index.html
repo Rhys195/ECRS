@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Recommendation System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+
+
+    <style>
+        body {
+    background-image: url('{{ url_for('static', filename='bgdarkindex.png') }}');
+            height: 100vh; /* Set the viewport height to 100% of the viewport height */
+    overflow: show; /* Prevent scrolling if elements overflow */
+    background-size: cover; /* Keeps the background image covering the entire viewport */
+    background-position: top; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+
+}
+
+.container {
+    position: relative;
+
+}
+
+        .footer {
+            background-color: #343a40; /* Dark background color */
+            color: white;
+            padding: 10;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+
+.footer-bottom-margin {
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+
+         .btn-primary:hover {
+            background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+            margin: 10px;
+            padding: 15px 25px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+
+          }
+
+          .btn-primary:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+          }
+
+          .glowing-text {
+            text-align: center;
+            margin-top: 15%;
+            font-size: 3rem; /* Adjust size as needed */
+            font-weight: bold;
+            color: #e0e0e0; /* Light gray color for the text */
+            text-shadow:
+                0 0 10px rgba(0, 128, 128, 0.8),
+                0 0 20px rgba(0, 128, 128, 0.8),
+                0 0 30px rgba(72, 61, 139, 0.8),
+                0 0 40px rgba(72, 61, 139, 0.8),
+                0 0 50px rgba(0, 0, 139, 0.8),
+                0 0 60px rgba(0, 0, 139, 0.8);
+            position: relative;
+            overflow: hidden;
+            animation: move-glow 4s linear infinite;
+        }
+
+        @keyframes move-glow {
+            0% {
+                text-shadow:
+                    0 0 10px rgba(0, 128, 128, 0.8),
+                    0 0 20px rgba(0, 128, 128, 0.8),
+                    0 0 30px rgba(72, 61, 139, 0.8),
+                    0 0 40px rgba(72, 61, 139, 0.8),
+                    0 0 50px rgba(0, 0, 139, 0.8),
+                    0 0 60px rgba(0, 0, 139, 0.8);
+            }
+            50% {
+                text-shadow:
+                    -10px 0 10px rgba(0, 128, 128, 0.8),
+                    -20px 0 20px rgba(0, 128, 128, 0.8),
+                    -30px 0 30px rgba(72, 61, 139, 0.8),
+                    -40px 0 40px rgba(72, 61, 139, 0.8),
+                    -50px 0 50px rgba(0, 0, 139, 0.8),
+                    -60px 0 60px rgba(0, 0, 139, 0.8);
+                /* Move shadow to left */
+            }
+            100% {
+                text-shadow:
+                    10px 0 10px rgba(0, 128, 128, 0.8),
+                    20px 0 20px rgba(0, 128, 128, 0.8),
+                    30px 0 30px rgba(72, 61, 139, 0.8),
+                    40px 0 40px rgba(72, 61, 139, 0.8),
+                    50px 0 50px rgba(0, 0, 139, 0.8),
+                    60px 0 60px rgba(0, 0, 139, 0.8);
+                /* Move shadow to right */
+            }
+        }
+        .card {
+            display: flex;
+            background: linear-gradient(to right, #283048 0%, #859398 51%, #283048 100%);
+            flex-direction: column;
+            width: 100%; /* Adjust as needed */
+            border: none; /* Optional: Remove border */
+            border-radius: 10px; /* Optional: Rounded corners */
+            overflow: hidden; /* Optional: Hide overflow for rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for depth */
+        }
+
+        card-img-top {
+            flex: 1;
+            background: linear-gradient(to right, #283048 0%, #859398 51%, #283048 100%);
+            height: 50%; /* Adjust height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff; /* Text color for the gradient part */
+        }
+
+        .card-image img {
+            max-height: 100%;
+            width: auto; /* Adjust as needed */
+            object-fit: cover;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 15px; /* Adjust padding as needed */
+        }
+
+    </style>
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand mx-auto" href="#">Ecommerce Recommendation System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('cart') }}">
+          Cart <span class="badge badge-secondary">{{ cart_count }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="settingsLink"><i class="fas fa-cog"></i> Settings</a>
+      </li>
+      <!-- Account Dropdown -->
+       <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user"></i> Account
+    </a>
+    <div class="dropdown-menu" aria-labelledby="accountDropdown">
+        {% if user %}
+            <a class="dropdown-item" href="{{ url_for('account') }}">{{ user }}</a>
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a class="dropdown-item" href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a class="dropdown-item" href="{{ url_for('signin') }}"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+        {% endif %}
+    </div>
+</li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- Go To Main Page Button -->
+</head>
+<body>
+    <div class="container">
+        <div class="centered">
+            <a href="{{ url_for('main') }}" class="btn btn-primary btn-lg" style="margin-top: 15%; margin-left: 14%; background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%); ">EXPLORE MORE</a>
+        </div>
+    </div>
+
+    <!--Adjustment vertical alignment with JavaScript -->
+    <script>
+        // Adjust this value as needed (e.g., "30%" to position higher)
+        document.documentElement.style.setProperty('--vertical-align', '30%');
+    </script>
+
+{% if signup_message %}
+<h5 class="text-center mt-3 font-weight-bold">{{ signup_message }}</h5>
+{% endif %}
+
+<!-- Trending Products -->
+<div class="container mt-5">
+  <h1 class="glowing-text" style="margin-top: 15%; font-family: 'Helvetica', sans-serif;">TRENDING PRODUCTS</h1>
+  <div class="row mt-4">
+    {% for index, product in trending_products.iterrows() %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <div class="card">
+        <img src="{{ random_product_image_urls[index] }}" class="card-img-top" alt="{{ product['Name'] }}" style="height: 200px;">
+        <div class="card-body">
+          <h5 class="card-title">{{ truncate(product['Name'], 13) }}</h5>
+          <p class="card-text">Brand: {{ product['Brand'] }}</p>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productModal{{ index }}">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="productModal{{ index }}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalLabel">{{ product['Name'] }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="{{ random_product_image_urls[index] }}" class="img-fluid" alt="{{ product['Name'] }}" style="height: 200px;">
+              </div>
+              <div class="col-md-8">
+                <p><strong>Brand:</strong> {{ product['Brand'] }}</p>
+                <p><strong>Review Count:</strong> {{ product['ReviewCount'] }}</p>
+                <p><strong>Rating:</strong> {{ product['Rating'] }}</p>
+                <p><strong>Price:</strong> {{ random_price }}</p>
+                <form action="{{ url_for('add_to_cart', product_name=product['Name']) }}" method="post">
+                  <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Bootstrap modal for sign up -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('signup') }}" method="post">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap modal for sign in -->
+<div class="modal fade" id="signinModal" tabindex="-1" aria-labelledby="signinModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signinModalLabel">Sign In</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('signin') }}" method="post">
+          <div class="mb-3">
+            <label for="signinUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="signinUsername" name="signinUsername" required>
+          </div>
+          <div class="mb-3">
+            <label for="signinPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="signinPassword" name="signinPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Choose Theme:</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="theme" id="defaultTheme" value="default" checked>
+                    <label class="form-check-label" for="defaultTheme">
+                        Default
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="theme" id="blackTheme" value="black">
+                    <label class="form-check-label" for="blackTheme">
+                        Black Theme
+                    </label>
+                </div>
+                <hr>
+                <h5>Zoom:</h5>
+                <input type="range" class="form-control-range" id="zoomSlider" min="100" max="125" step="5" value="100">
+                <label for="zoomSlider" id="zoomLabel">Zoom: 100%</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="applyTheme">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Function to apply the selected theme
+    function applyTheme(theme) {
+        if (theme === 'black') {
+            document.body.style.backgroundImage = "url('{{ url_for('static', filename='bgdarkindex.png') }}')";
+            document.body.style.color = 'blue';
+        } else {
+            document.body.style.backgroundImage = "url('{{ url_for('static', filename='bgliteindex.png') }}')"; // Use a different image for the default theme
+            document.body.style.color = 'black'; // Use black text for the default theme
+        }
+    }
+
+    // Handle click on Settings link to open the modal
+    document.getElementById('settingsLink').addEventListener('click', function() {
+        $('#settingsModal').modal('show');
+    });
+
+    // Handle theme apply button click
+    document.getElementById('applyTheme').addEventListener('click', function() {
+        var selectedTheme = document.querySelector('input[name="theme"]:checked').value;
+        localStorage.setItem('selectedTheme', selectedTheme); // Save theme in local storage
+        applyTheme(selectedTheme); // Apply the theme
+        $('#settingsModal').modal('hide');
+    });
+
+    // Handle zoom slider input
+    document.getElementById('zoomSlider').addEventListener('input', function() {
+        var zoomValue = this.value;
+        document.body.style.zoom = zoomValue + '%';
+        document.getElementById('zoomLabel').textContent = 'Zoom: ' + zoomValue + '%';
+    });
+
+    // On page load, check local storage and apply the saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+        var savedTheme = localStorage.getItem('selectedTheme');
+        if (savedTheme) {
+            applyTheme(savedTheme); // Apply the saved theme
+            document.getElementById(savedTheme + 'Theme').checked = true; // Set the radio button accordingly
+        }
+    });
+</script>
+
+
+<!-- Footer -->
+<footer class="footer bg-dark text-white">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <h5>About Us</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium risus quis urna maximus, eget vestibulum risus vestibulum.</p>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <h5>Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <h5>Contact Us</h5>
+                <address>
+                    <strong>Company Name</strong><br>
+                    123 Street, City<br>
+                    Country<br>
+                    <i class="fas fa-phone"></i> Phone: +1234567890<br>
+                    <i class="fas fa-envelope"></i> Email: info@example.com
+                </address>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <hr class="bg-light">
+                <p class="text-center">© 2024 Ecommerce Recommendation System. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
