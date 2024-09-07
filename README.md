@@ -1,31 +1,141 @@
-<h1 align="center">Hi 👋, I'm Rhys</h1>
-<h3 align="center">A passionate frontend developer from Earth</h3>
+<h3 align="left">Hybrid Recommendation System:</h3>
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=rhys195&label=Profile%20views&color=0e75b6&style=flat" alt="rhys195" /> </p>
+<h3 align="left">Overview:</h3>
+This project implements a hybrid recommendation system that combines the strengths of multiple recommendation algorithms to provide personalized recommendations to users. The system integrates content-based filtering, collaborative filtering, and matrix factorization techniques to achieve high accuracy and diversity in its recommendations.
 
-- 🔭 I’m currently working on **Hybrid recommendation system**
+<h3 align="left">Features:</h3>
+Hybrid Recommendation Algorithm: Combines content-based filtering, collaborative filtering, and matrix factorization to provide accurate and diverse recommendations.
+Personalized Recommendations: Provides users with personalized recommendations based on their past behavior and preferences.
+<h3 align="left">Scalability:</h3> Designed to handle large datasets and scale horizontally to meet the needs of growing user bases.
+<h3 align="left">Flexibility:</h3> Allows for easy integration with various data sources and formats.
 
-- 🌱 I’m currently learning **Frameworks,courses etc...**
+<h3 align="left">Getting Started:</h3>
 
-- 👯 I’m looking to collaborate on **ECRS**
+<h3 align="left">Prerequisites:</h3>
+Python 3.8+
+NumPy
+Pandas
+SciPy
+Scikit-learn
+TensorFlow
+Keras
 
-- 👨‍💻 All of my projects are available at [https://github.com/Rhys195](https://github.com/Rhys195)
+<h3 align="left">Installation:</h3>
+<h3 align="left">Clone the repository:</h3> git clone https://github.com/your-username/hybrid-recommendation-system.git
+<h3 align="left">Install the required packages:</h3> pip install -r requirements.txt
+<h3 align="left">Run the application:</h3> python app.py
 
-- 💬 Ask me about **just a learner**
+<h3 align="left">Usage</h3>
+Data Preparation
+Prepare your dataset in CSV format with the following columns:
+user_id: Unique identifier for each user.
+item_id: Unique identifier for each item.
+rating: Rating given by the user to the item.
+Split your dataset into training and testing sets (e.g., 80% for training and 20% for testing).
+Training the Model
+Run the training script: python train.py --data_path=/path/to/your/dataset.csv
+The model will be trained and saved to the models directory.
+Making Predictions
+Run the prediction script: python predict.py --user_id=123 --item_id=456
+The script will output the predicted rating for the given user-item pair.
+Contributing
+Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes.
 
-- 📫 How to reach me **nadeemakram1722@gmail.com**
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.decomposition import NMF
 
-- 📄 Know about my experiences [dev.](dev.)
+class HybridRecommender:
+    def __init__(self, num_factors=10, num_iterations=50):
+        self.num_factors = num_factors
+        self.num_iterations = num_iterations
+        self.user_factors = None
+        self.item_factors = None
 
-- ⚡ Fun fact **Just another stupid and dumb person**
+    def fit(self, ratings):
+        # Split ratings into training and testing sets
+        train_ratings, test_ratings = train_test_split(ratings, test_size=0.2, random_state=42)
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
- <h3 align="left">Features:</h3>
-</p>
+        # Create user-item matrix
+        user_item_matrix = self.create_user_item_matrix(train_ratings)
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://developer.android.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/> </a> <a href="https://azure.microsoft.com/en-in/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg" alt="azure" width="40" height="40"/> </a> <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.chartjs.org" target="_blank" rel="noreferrer"> <img src="https://www.chartjs.org/media/logo-title.svg" alt="chartjs" width="40" height="40"/> </a> <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://www.cypress.io" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/6e46ec1fc23b60c8fd0d2f2ff46db82e16dbd75f/icons/cypress.svg" alt="cypress" width="40" height="40"/> </a> <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/django.svg" alt="django" width="40" height="40"/> </a> <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> <a href="https://dotnet.microsoft.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original-wordmark.svg" alt="dotnet" width="40" height="40"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> <a href="https://flask.palletsprojects.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/pocoo_flask/pocoo_flask-icon.svg" alt="flask" width="40" height="40"/> </a> <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> <a href="https://cloud.google.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp" width="40" height="40"/> </a> <a href="https://hadoop.apache.org/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/apache_hadoop/apache_hadoop-icon.svg" alt="hadoop" width="40" height="40"/> </a> <a href="https://heroku.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/heroku/heroku-icon.svg" alt="heroku" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> <a href="https://opencv.org/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg" alt="opencv" width="40" height="40"/> </a> <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://pytorch.org/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://scikit-learn.org/" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit_learn" width="40" height="40"/> </a> <a href="https://seaborn.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="seaborn" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> <a href="https://www.tensorflow.org" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="tensorflow" width="40" height="40"/> </a> <a href="https://unity.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="unity" width="40" height="40"/> </a> </p>
+        # Compute content-based filtering similarity matrix
+        cbf_similarity_matrix = self.compute_cbf_similarity(user_item_matrix)
 
-<p><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=rhys195&show_icons=true&locale=en&layout=compact" alt="rhys195" /></p>
+        # Compute collaborative filtering similarity matrix
+        cf_similarity_matrix = self.compute_cf_similarity(user_item_matrix)
 
+        # Compute matrix factorization
+        self.user_factors, self.item_factors = self.compute_matrix_factorization(user_item_matrix)
+
+        # Combine similarities using weighted average
+        self.similarity_matrix = self.combine_similarities(cbf_similarity_matrix, cf_similarity_matrix)
+
+        # Evaluate model on testing set
+        self.evaluate_model(test_ratings)
+
+    def create_user_item_matrix(self, ratings):
+        # Create user-item matrix with ratings
+        user_item_matrix = ratings.pivot(index='user_id', columns='item_id', values='rating')
+        return user_item_matrix
+
+    def compute_cbf_similarity(self, user_item_matrix):
+        # Compute content-based filtering similarity matrix
+        cbf_similarity_matrix = cosine_similarity(user_item_matrix.T)
+        return cbf_similarity_matrix
+
+    def compute_cf_similarity(self, user_item_matrix):
+        # Compute collaborative filtering similarity matrix
+        cf_similarity_matrix = cosine_similarity(user_item_matrix)
+        return cf_similarity_matrix
+
+    def compute_matrix_factorization(self, user_item_matrix):
+        # Compute matrix factorization using NMF
+        nmf = NMF(n_components=self.num_factors, max_iter=self.num_iterations)
+        user_factors = nmf.fit_transform(user_item_matrix)
+        item_factors = nmf.components_.T
+        return user_factors, item_factors
+
+    def combine_similarities(self, cbf_similarity_matrix, cf_similarity_matrix):
+        # Combine similarities using weighted average
+        similarity_matrix = 0.5 * cbf_similarity_matrix + 0.5 * cf_similarity_matrix
+        return similarity_matrix
+
+    def evaluate_model(self, test_ratings):
+        # Evaluate model on testing set
+        predicted_ratings = self.predict(test_ratings)
+        mse = mean_squared_error(test_ratings['rating'], predicted_ratings)
+        print(f'MSE: {mse:.4f}')
+
+    def predict(self, ratings):
+        # Make predictions for given ratings
+        predicted_ratings = []
+        for rating in ratings.itertuples():
+            user_id = rating.user_id
+            item_id = rating.item_id
+            user_factor = self.user_factors[user_id]
+            item_factor = self.item_factors[item_id]
+            predicted_rating = user_factor.dot(item_factor)
+            predicted_ratings.append(predicted_rating)
+        return predicted_ratings
+
+# Load ratings data
+ratings = pd.read_csv('ratings.csv')
+
+# Create hybrid recommender
+recommender = HybridRecommender()
+
+# Fit model to ratings data
+recommender.fit(ratings)
+
+# Make predictions for a given user-item pair
+user_id = 123
+item_id = 456
+predicted_rating = recommender.predict(pd.DataFrame({'user_id': [user_id], 'item_id': [item_id]}))
+print(f'Predicted rating: {predicted_rating:.4f}')
+
+<h3 align="left">License</h3>
+This project is licensed under the MIT License. See the LICENSE file for details.
