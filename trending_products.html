@@ -1,0 +1,121 @@
+<div class="scroll-hint-container">
+    <!-- Gradient on the left side for scroll hint -->
+    <div class="scroll-hint-left">
+        <i class="fas fa-chevron-left arrow-icon"></i>
+    </div>
+    <!-- Gradient on the right side for scroll hint -->
+    <div class="scroll-hint-right">
+        <i class="fas fa-chevron-right arrow-icon"></i>
+    </div>
+
+<div class="full-width-wrapper">
+    <div class="container-fluid custom-container">
+        <h1 class="glowing-text" style="font-family: 'Helvetica', sans-serif; font-style: oblique">TRENDING PRODUCTS</h1>
+
+
+
+            <!-- Product rows container -->
+            <div class="trending-products-wrapper">
+                <div class="trending-products-container">
+                    <!-- First row of products -->
+                    <div class="trending-row">
+                        {% for product in trending_products[:15] %}
+                        <div class="card">
+                            <img src="{{ product['ImageURL'] }}" class="card-img-top" alt="{{ product['Name'] }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ truncate(product['Name'], 12) }}</h5>
+                                <p class="card-text">Brand: {{ product['Brand'] }}</p>
+                                <button type="button" class="btn-bn" data-toggle="modal" data-target="#productModal{{ loop.index }}">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modal for each product -->
+                        <div class="modal fade" id="productModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel{{ loop.index }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="productModalLabel{{ loop.index }}">{{ product['Name'] }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <img src="{{ product['ImageURL'] }}" class="img-fluid" alt="{{ product['Name'] }}" style="height: 200px;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p><strong>Brand:</strong> {{ product['Brand'] }}</p>
+                                                <p><strong>Review Count:</strong> {{ product['ReviewCount'] }}</p>
+                                                <p><strong>Rating:</strong> {{ product['Rating'] }}</p>
+                                                <p><strong>Price:</strong> ${{ product['random_price'] }}</p>
+                                                <form action="{{ url_for('add_to_cart', product_name=product['Name']) }}" method="post">
+                                                    <button type="submit" class="btn btn-primary btn-atc">Add to Cart</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Second row of products -->
+                    <div class="trending-row">
+                        {% for product in trending_products[15:30] %}
+                        <div class="card">
+                            <img src="{{ product['ImageURL'] }}" class="card-img-top" alt="{{ product['Name'] }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ truncate(product['Name'], 12) }}</h5>
+                                <p class="card-text">Brand: {{ product['Brand'] }}</p>
+                                <button type="button" class="btn-bn" data-toggle="modal" data-target="#productModal{{ loop.index + 15 }}">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modal for each product -->
+                        <div class="modal fade" id="productModal{{ loop.index + 15 }}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel{{ loop.index + 15 }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="productModalLabel{{ loop.index + 15 }}">{{ product['Name'] }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <img src="{{ product['ImageURL'] }}" class="img-fluid" alt="{{ product['Name'] }}" style="height: 200px;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p><strong>Brand:</strong> {{ product['Brand'] }}</p>
+                                                <p><strong>Review Count:</strong> {{ product['ReviewCount'] }}</p>
+                                                <p><strong>Rating:</strong> {{ product['Rating'] }}</p>
+                                                <p><strong>Price:</strong> ${{ product['random_price'] }}</p>
+                                                <form action="{{ url_for('add_to_cart', product_name=product['Name']) }}" method="post">
+                                                    <button type="submit" class="btn btn-primary btn-atc">Add to Cart</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
